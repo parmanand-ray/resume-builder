@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 const Hero = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -8,32 +8,31 @@ const Hero = () => {
   };
 
   return (
-    <section className="pb-32 md:pb-44 bg-[url('https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/bg-with-grid.png')] bg-cover bg-center bg-no-repeat text-slate-800 text-sm font-['Poppins']">
+    <section className="pb-32 md:pb-44 bg-[url('https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/bg-with-grid.png')] bg-cover bg-center bg-no-repeat text-green-800 text-sm font-['Poppins']">
       {/* Navbar Section */}
       <nav className="flex items-center justify-between p-4 md:px-16 lg:px-24 xl:px-32 border-b border-white/25 w-full">
         <a href="/">
-          <img
-            src="https://prebuiltui.com/logo.svg"
-            alt="Logo"
-            className="h-10"
-          />
+          <img src="/logo.svg" alt="Logo" className="h-10" />
         </a>
 
         <ul
           className={`max-md:absolute max-md:h-full max-md:z-50 max-md:w-full max-md:top-0 transition-all duration-300 max-md:backdrop-blur max-md:bg-white/70 max-md:text-base flex flex-col md:flex-row items-center justify-center gap-8 font-medium ${isMenuOpen ? "left-0" : "-left-full"}`}
         >
-          <li className="hover:text-slate-500">
-            <a href="#home">Home</a>
+          <li className="hover:text-green-500">
+            <a href="#">Home</a>
           </li>
-          <li className="hover:text-slate-500">
-            <a href="#products">Products</a>
+          <li className="hover:text-green-500">
+            <a href="#features">features</a>
           </li>
-          <li className="hover:text-slate-500">
-            <a href="#pricing">Pricing</a>
+          <li className="hover:text-green-500">
+            <a href="#testimonials">Testimonials</a>
+          </li>
+          <li className="hover:text-green-500">
+            <a href="#contacts">Contacts</a>
           </li>
           <button
             onClick={toggleMenu}
-            className="md:hidden bg-gray-800 text-white p-2 rounded-md"
+            className="md:hidden bg-green-800 text-white p-2 rounded-md"
           >
             Close
           </button>
@@ -50,20 +49,33 @@ const Hero = () => {
             <path d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
+        <div className="flex gap-2">
+          <Link
+            to="/app?state=register"
+            className="max-md:hidden px-6 py-3 text-white bg-green-600 hover:bg-green-700 transition rounded-full"
+          >
+            Get Started
+          </Link>
 
-        <button className="max-md:hidden px-6 py-3 text-white bg-indigo-600 hover:bg-indigo-700 transition rounded-full">
-          Contact us
-        </button>
+          <Link
+            to="/app?state=login"
+            class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-heading rounded-full group bg-gradient-to-br from-green-300 to-green-300 group-hover:from-green-300 group-hover:to-green-300 dark:text-white dark:hover:text-heading focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
+          >
+            <span class="relative px-4 py-2.5 transition-all ease-in duration-75 bg-neutral-primary-soft rounded-full group-hover:bg-transparent group-hover:dark:bg-transparent leading-5">
+              Login
+            </span>
+          </Link>
+        </div>
       </nav>
 
       {/* Hero Content */}
       <div className="flex flex-col-reverse gap-10 md:flex-row px-4 md:px-16 lg:px-24 xl:px-32 mt-12 md:mt-32">
         <div className="max-md:text-center">
-          <h1 className="text-4xl md:text-6xl/[76px] font-semibold max-w-xl bg-gradient-to-r from-slate-900 to-[#6D8FE4] text-transparent bg-clip-text">
+          <h1 className="text-4xl md:text-6xl/[76px] font-semibold max-w-xl bg-gradient-to-r from-green-900 to-[#6fe46d] text-transparent bg-clip-text">
             Create Job-Winning Resumes in Minutes
           </h1>
 
-          <p className="text-sm md:text-base max-w-lg mt-6 text-slate-600">
+          <p className="text-sm md:text-base max-w-lg mt-6 text-green-600">
             Build ATS-friendly resumes with real-time preview, smart
             suggestions, and instant PDF download. No design skills needed.
           </p>
@@ -97,7 +109,7 @@ const Hero = () => {
                   </svg>
                 ))}
               </div>
-              <p className="text-xs text-slate-500 font-medium">
+              <p className="text-xs text-green-500 font-medium">
                 Trusted by 1,000+ professionals
               </p>
             </div>
@@ -105,9 +117,12 @@ const Hero = () => {
 
           {/* Main CTA Button */}
           <div className="flex items-center gap-4 justify-center md:justify-start">
-            <button className="px-8 py-4 rounded-full bg-indigo-600 text-white font-medium hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition-all active:scale-95">
+            <Link
+              to="/app"
+              className="px-8 py-4 rounded-full bg-green-600 text-white font-medium hover:bg-green-700 shadow-lg shadow-green-200 transition-all active:scale-95"
+            >
               Create Resume Now — It's Free
-            </button>
+            </Link>
           </div>
         </div>
 
