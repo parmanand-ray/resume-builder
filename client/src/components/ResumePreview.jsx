@@ -30,7 +30,6 @@ const ResumePreview = ({ data, template, accentColor, classes = "" }) => {
             size: letter;
             margin: 0;
           }
-
           @media print {
             html,
             body {
@@ -38,16 +37,13 @@ const ResumePreview = ({ data, template, accentColor, classes = "" }) => {
               height: 11in;
               overflow: hidden;
             }
-
             body * {
               visibility: hidden;
             }
-
             #resume-preview,
             #resume-preview * {
               visibility: visible;
             }
-
             #resume-preview {
               position: absolute;
               left: 0;
