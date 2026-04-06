@@ -2,11 +2,15 @@ import { Lock, Mail, User2Icon } from "lucide-react";
 import React from "react";
 import Banner from "../components/home/Banner";
 import { useSearchParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../app/features/authSlice";
+import toast from "react-hot-toast";
+import api from "../configs/api";
 
 const Login = () => {
   const [searchParams] = useSearchParams();
   const urlState = searchParams.get("state");
-
+  const dispatch = useDispatch();
   const [state, setState] = React.useState(urlState || "login");
   const [formData, setFormData] = React.useState({
     name: "",
@@ -14,7 +18,17 @@ const Login = () => {
     password: "",
   });
 
-  const handleSubmit = (e) => e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await api.post(`/api/users/${state}`, formData);
+      dispatch(login(data));
+      localStorage.setItem("token", data.token);
+      toast.success(data.message);
+    } catch (error) {
+      toast(error?.response?.data?.message || error.message);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,12 +41,12 @@ const Login = () => {
 
       <div className="flex flex-col lg:flex-row min-h-screen">
         {/* LEFT - MODERN RESUME PREVIEW */}
-        <div className="hidden lg:flex w-1/2 items-center justify-center bg-gradient-to-br from-green-100 to-white ">
+        <div className="hidden lg:flex w-2/3 items-center justify-center bg-gradient-to-br from-green-100 to-white ">
           <div className="relative">
             <img
-              src="https://cdn-images.zety.com/images/zety/landings/builder/in/resume-builder-template@1x.png"
+              src="/resume.png"
               alt="Modern Resume Template"
-              className="w-[380px]  shadow-2xl"
+              className="w-[550px] h-[600px]"
             />
 
             {/* Premium Tag */}
@@ -57,13 +71,13 @@ const Login = () => {
             </p>
 
             {state !== "login" && (
-              <div className="flex items-center mt-6 w-full border h-12 rounded-full pl-6 gap-2">
+              <div className="flex items-center mt-6 w-full border h-12 rounded-full pl-6 gap-2 focus-within:border-blue-500">
                 <User2Icon size={16} />
                 <input
                   type="text"
                   name="name"
                   placeholder="Name"
-                  className="outline-none w-full"
+                  className="w-full h-full bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-gray-800 placeholder-gray-400"
                   value={formData.name}
                   onChange={handleChange}
                   required
@@ -77,7 +91,7 @@ const Login = () => {
                 type="email"
                 name="email"
                 placeholder="Email id"
-                className="outline-none w-full"
+                className="w-full h-full bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-gray-800 placeholder-gray-400"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -90,7 +104,7 @@ const Login = () => {
                 type="password"
                 name="password"
                 placeholder="Password"
-                className="outline-none w-full"
+                className="w-full h-full bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-gray-800 placeholder-gray-400"
                 value={formData.password}
                 onChange={handleChange}
                 required

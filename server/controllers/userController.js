@@ -3,9 +3,9 @@
 
 import Resume from "../models/Resume.js";
 import User from "../models/User.js";
-
+import jwt from "jsonwebtoken";
 const generateToken = (userId) => {
-  const token = jwt.sign({ id: userId }, process.env.jwtSecret, {
+  const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
     expiresIn: "7d",
   });
   return token;
@@ -36,6 +36,8 @@ export const registerUser = async (req, res) => {
       .status(201)
       .json({ message: "User registered successfully", token, user });
   } catch (error) {
+    console.error("ERROR:", error); // 👈 ADD THIS
+
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -88,8 +90,8 @@ export const getUserById = async (req, res) => {
 export const getUserResumes = async (req, res) => {
   try {
     const userId = req.userId;
-//return user resumes
-const resumes = await Resume.find({ userId });
+    //return user resumes
+    const resumes = await Resume.find({ userId });
     res.status(200).json({ resumes });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
