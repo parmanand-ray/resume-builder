@@ -1,6 +1,7 @@
 //controller for user related operations
 //POST: /api/users/regiser
 
+import Resume from "../models/Resume.js";
 import User from "../models/User.js";
 
 const generateToken = (userId) => {
@@ -77,6 +78,19 @@ export const getUserById = async (req, res) => {
     }
     user.password = undefined; // Hide password in response
     res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+//controller for getting user resumes
+//GET: /api/users/resumes
+export const getUserResumes = async (req, res) => {
+  try {
+    const userId = req.userId;
+//return user resumes
+const resumes = await Resume.find({ userId });
+    res.status(200).json({ resumes });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
