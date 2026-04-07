@@ -39,7 +39,7 @@ const Testimonials = () => {
   ];
 
   const CreateCard = ({ card }) => (
-    <div className="p-5 rounded-xl mx-4 shadow hover:shadow-lg transition-all duration-300 w-80 shrink-0 bg-white border border-gray-100">
+    <div id="testimonials" className="p-5 rounded-xl mx-4 shadow hover:shadow-lg transition-all duration-300 w-80 shrink-0 bg-white border border-gray-100">
       {/* Top Section */}
       <div className="flex gap-3 items-center">
         <img

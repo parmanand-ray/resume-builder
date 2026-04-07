@@ -3,7 +3,6 @@
 
 import imageKit from "../configs/imageKit.js";
 import Resume from "../models/Resume.js";
-import fs from "fs";
 
 export const createResume = async (req, res) => {
   try {
@@ -20,6 +19,7 @@ export const createResume = async (req, res) => {
       .status(201)
       .json({ message: "Resume created successfully", resume: newResume });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({ message: error.message });
   }
 };

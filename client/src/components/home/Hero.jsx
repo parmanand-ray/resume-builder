@@ -1,6 +1,9 @@
+import { ArrowRight } from "lucide-react";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 const Hero = () => {
+  const { user } = useSelector((state) => state.auth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -11,9 +14,81 @@ const Hero = () => {
     <section className="pb-32 md:pb-44 bg-[url('https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/bg-with-grid.png')] bg-cover bg-center bg-no-repeat text-green-800 text-sm font-['Poppins']">
       {/* Navbar Section */}
       <nav className="flex items-center justify-between p-4 md:px-16 lg:px-24 xl:px-32 border-b border-white/25 w-full">
-        <a href="/">
-          <img src="/logo.svg" alt="Logo" className="h-10" />
-        </a>
+        <div className="flex items-center gap-3">
+          <div
+            className="flex items-center justify-center rounded-xl"
+            style={{
+              width: 40,
+              height: 40,
+              background: "linear-gradient(135deg, #3B6D11, #639922)",
+            }}
+          >
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="white"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline
+                points="14 2 14 8 20 8"
+                style={{
+                  fill: "none",
+                  stroke: "rgba(255,255,255,0.5)",
+                  strokeWidth: 1.5,
+                }}
+              />
+              <line
+                x1="16"
+                y1="13"
+                x2="8"
+                y2="13"
+                style={{
+                  fill: "none",
+                  stroke: "rgba(255,255,255,0.7)",
+                  strokeWidth: 1.5,
+                }}
+              />
+              <line
+                x1="16"
+                y1="17"
+                x2="8"
+                y2="17"
+                style={{
+                  fill: "none",
+                  stroke: "rgba(255,255,255,0.7)",
+                  strokeWidth: 1.5,
+                }}
+              />
+            </svg>
+          </div>
+          <div>
+            <div
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: 20,
+                fontWeight: 600,
+                color: "#639900",
+                letterSpacing: "-0.3px",
+              }}
+            >
+              ProResume AI
+            </div>
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: 500,
+                color: "#639922",
+                letterSpacing: "1.5px",
+                textTransform: "uppercase",
+                marginTop: -2,
+              }}
+            >
+              Resume Builder
+            </div>
+          </div>
+        </div>
 
         <ul
           className={`max-md:absolute max-md:h-full max-md:z-50 max-md:w-full max-md:top-0 transition-all duration-300 max-md:backdrop-blur max-md:bg-white/70 max-md:text-base flex flex-col md:flex-row items-center justify-center gap-8 font-medium ${isMenuOpen ? "left-0" : "-left-full"}`}
@@ -50,21 +125,36 @@ const Hero = () => {
           </svg>
         </button>
         <div className="flex gap-2">
-          <Link
-            to="/app?state=register"
-            className="max-md:hidden px-6 py-3 text-white bg-green-600 hover:bg-green-700 transition rounded-full"
-          >
-            Get Started
-          </Link>
+          <div className="flex gap-2">
+            {!user && (
+              <>
+                <Link
+                  to="/app?state=register"
+                  className="max-md:hidden px-6 py-3 text-white bg-green-600 hover:bg-green-700 transition rounded-full"
+                >
+                  Get Started
+                </Link>
 
-          <Link
-            to="/app?state=login"
-            class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium text-heading rounded-full group bg-gradient-to-br from-green-300 to-green-300 group-hover:from-green-300 group-hover:to-green-300 dark:text-white dark:hover:text-heading focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
-          >
-            <span class="relative px-4 py-2.5 transition-all ease-in duration-75 bg-neutral-primary-soft rounded-full group-hover:bg-transparent group-hover:dark:bg-transparent leading-5">
-              Login
-            </span>
-          </Link>
+                <Link
+                  to="/app?state=login"
+                  className="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium rounded-full bg-gradient-to-br from-green-300 to-green-300"
+                >
+                  <span className="relative px-4 py-2.5 bg-white rounded-full">
+                    Login
+                  </span>
+                </Link>
+              </>
+            )}
+
+            {user && (
+              <Link
+                to="/app"
+                className="hidden md:block px-8 py-2 bg-green-500 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white"
+              >
+                Dashboard <ArrowRight size={16} className="inline-block ml-1" />
+              </Link>
+            )}
+          </div>
         </div>
       </nav>
 

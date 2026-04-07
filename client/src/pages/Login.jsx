@@ -41,26 +41,54 @@ const Login = () => {
 
       <div className="flex flex-col lg:flex-row min-h-screen">
         {/* LEFT - MODERN RESUME PREVIEW */}
-        <div className="hidden lg:flex w-2/3 items-center justify-center bg-gradient-to-br from-green-100 to-white ">
-          <div className="relative">
-            <img
-              src="/resume.png"
-              alt="Modern Resume Template"
-              className="w-[550px] h-[600px]"
-            />
+        <div className="hidden lg:flex w-2/3 items-center justify-center bg-gradient-to-br from-green-100 to-white p-12">
+          <div className="max-w-xl space-y-6">
+            {/* Headline */}
+            <h1 className="text-5xl font-extrabold leading-tight text-gray-900">
+              Build a Resume That{" "}
+              <span className="text-green-600">Gets You Hired</span>
+            </h1>
 
-            {/* Premium Tag */}
-            <div className="absolute top-4 right-4 bg-black text-white text-xs px-3 py-1 rounded-full">
-              Premium Template
+            {/* Subtext */}
+            <p className="text-lg text-gray-600">
+              Create professional, ATS-friendly resumes in minutes. No design
+              skills needed. Just focus on your career — we handle the rest.
+            </p>
+
+            {/* Feature Points */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                <p className="text-gray-700">
+                  Modern & recruiter-approved templates
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                <p className="text-gray-700">
+                  One-click download in PDF format
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                <p className="text-gray-700">Optimized for ATS systems</p>
+              </div>
+            </div>
+
+            {/* CTA Tag */}
+            <div className="inline-block bg-black text-white text-sm px-4 py-2 rounded-full shadow-md">
+              Trusted by 10,000+ job seekers
             </div>
           </div>
         </div>
 
         {/* RIGHT - FORM */}
-        <div className="flex items-center justify-center w-full lg:w-1/2 bg-gray-50 p-6">
+        <div className="flex items-center justify-center w-full lg:w-1/2 bg-gradient-to-br from-green-30 to-green-100 p-12 p-6">
           <form
             onSubmit={handleSubmit}
-            className="sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-white shadow-sm"
+            className="sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8  shadow-sm"
           >
             <h1 className="text-gray-900 text-3xl mt-10 font-medium">
               {state === "login" ? "Login" : "Sign up"}
