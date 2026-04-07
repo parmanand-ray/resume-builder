@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FilePenLineIcon,
+  LoaderCircleIcon,
   PencilIcon,
   PlusIcon,
   TrashIcon,
@@ -29,7 +30,15 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const loadAllResumes = async () => {
-    setAllResumes(dummyResumeData);
+    try {
+      const { data } = await api.get("/api/users/resumes", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setAllResumes(data.resumes);
+    } catch {
+      toast.error(error?.response?.data?.message || error.message);
+      console.log(error);
+    }
   };
   const createResume = async (event) => {
     try {
@@ -56,7 +65,7 @@ const Dashboard = () => {
     try {
       const resumeText = await extractTextFromPDF(resume);
       console.log(resumeText);
-      
+
       const { data } = await api.post(
         "/api/ai/upload-resume",
         { title, resumeText },
@@ -74,16 +83,44 @@ const Dashboard = () => {
   };
 
   const editTitle = async (event) => {
-    event.preventDefault();
-    setEditResumeID("");
+    try {
+      event.preventDefault();
+      const { data } = await api.put(
+        `/api/resumes/update`,
+        { resumeId: editResumeID, resumeData: { title } },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      setAllResumes(
+        allResumes.map((resume) =>
+          resume._id === editResumeID ? { ...resume, title } : title,
+        ),
+      );
+      setTitle("");
+      setEditResumeID("");
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message);
+      console.log(error);
+    }
   };
 
   const deleteResume = async (resumeId) => {
-    const conform = window.confirm(
-      "Are you sure you want to delete this resume?",
-    );
-    if (conform) {
-      setAllResumes(allResumes.filter((resume) => resume._id !== resumeId));
+    try {
+      const conform = window.confirm(
+        "Are you sure you want to delete this resume?",
+      );
+      if (conform) {
+        const { data } = await api.delete(`/api/resumes/delete/${resumeId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setAllResumes(allResumes.filter((resume) => resume._id !== resumeId));
+        toast.success(data.message);
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message);
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -265,7 +302,10 @@ const Dashboard = () => {
                 type="submit"
                 className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
               >
-                Upload Resume
+                {isLoading && (
+                  <LoaderCircleIcon className="animate-spin size-4 text-white" />
+                )}{" "}
+                {isLoading ? "Uploading..." : " Upload Resume"}
               </button>
 
               <XIcon

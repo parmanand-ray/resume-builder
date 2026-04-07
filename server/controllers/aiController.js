@@ -69,10 +69,7 @@ export const uploadResume = async (req, res) => {
     if (!resumeText) {
       return res.status(400).json({ message: "Missing required fields" });
     }
-    const file = req.file;
-    if (!file) {
-      return res.status(400).json({ message: "Please upload a resume file" });
-    }
+
     const systemPrompt =
       "You are a helpful assistant that extracts the content of a resume file. You take the user's uploaded resume file and extract the relevant information such as their name, contact information, skills, experience, and education. You then return this information in a structured format that can be easily used to populate a resume template.";
 
@@ -142,6 +139,8 @@ export const uploadResume = async (req, res) => {
     const newResume = await Resume.create({ userId, title, ...parsedData });
     res.json({ resumeId: newResume._id });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
