@@ -25,8 +25,11 @@ import ExperienceForm from "../components/ExperienceForm";
 import EducationForm from "../components/EducationForm";
 import ProjectForm from "../components/ProjectForm";
 import SkillsForms from "../components/SkillsForms";
+import { useSelector } from "react-redux";
+import api from "../configs/api";
 const ResemeBuilder = () => {
   const { resumeId } = useParams();
+  const { token } = useSelector((state) => state.auth);
   const [resumeData, setResumeData] = useState({
     _id: "",
     title: "",
@@ -42,10 +45,16 @@ const ResemeBuilder = () => {
   });
 
   const loadExitingResume = async () => {
-    const resume = dummyResumeData.find((resume) => resume._id === resumeId);
-    if (resume) {
-      setResumeData(resume);
-      document.title = resume.title;
+    try {
+      const { data } = await api.get("/api/resumes/get/" + resumeId, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (data.resume) {
+        setResumeData(data.resume);
+        document.title = data.resume.title;
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
@@ -64,7 +73,23 @@ const ResemeBuilder = () => {
   }, []);
 
   const changeResumeVisibility = async () => {
-    setResumeData({ ...resumeData, public: !resumeData.public });
+    try {
+      const formData = new FormData();
+      formData.append("resumeId", resumeId);
+      formData.append(
+        "resumeData",
+        JSON.stringify({ public: !resumeData.public }),
+      );
+      const { data } = await api.put("/api/resumes/update", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setResumeData({ ...resumeData, public: !resumeData.public });
+      toast.success(data.message);
+    } catch (error) {
+      console.error("Error saving resume:", error);
+    }
   };
 
   const handleShare = () => {

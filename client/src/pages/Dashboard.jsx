@@ -120,7 +120,6 @@ const Dashboard = () => {
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message);
-      console.log(error);
     }
   };
   useEffect(() => {
@@ -130,7 +129,7 @@ const Dashboard = () => {
     <div>
       <div className="max-w-7xl mx-auto px-4 py-8">
         <p className="text-2xl font-medium mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text text-transparent sm:hidden">
-          Welcome, Parmanand Ray
+          Welcome, {user.name}
         </p>
         <div className="flex gap-4">
           <button
@@ -299,8 +298,9 @@ const Dashboard = () => {
               </div>
 
               <button
+                disabled={isLoading}
                 type="submit"
-                className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
               >
                 {isLoading && (
                   <LoaderCircleIcon className="animate-spin size-4 text-white" />

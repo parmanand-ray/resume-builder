@@ -121,10 +121,7 @@ export const uploadResume = async (req, res) => {
     const response = await ai.chat.completions.create({
       model: process.env.OPENAI_MODEL,
       messages: [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
+        { role: "system", content: systemPrompt },
         {
           role: "user",
           content: userPrompt,

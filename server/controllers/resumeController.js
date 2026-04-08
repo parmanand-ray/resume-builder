@@ -45,6 +45,7 @@ export const deleteResume = async (req, res) => {
 export const getResumeById = async (req, res) => {
   try {
     const userId = req.userId;
+
     const { resumeId } = req.params;
 
     const resume = await Resume.findOne({ userId, _id: resumeId });
