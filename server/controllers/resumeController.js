@@ -69,7 +69,12 @@ export const updateResume = async (req, res) => {
     const userId = req.userId;
     const { resumeId, resumeData, removeBackground } = req.body;
     const image = req.file;
-    let resumeDataCopy = JSON.parse(JSON.stringify(resumeData));
+    let resumeDataCopy ;
+    if(typeof resumeData === "string"){
+      resumeDataCopy = JSON.parse(resumeData);
+    }else{
+      resumeDataCopy = structuredClone(resumeData);
+    }
     if (image) {
       const imageBufferData = createReadStream(image.path);
       const response = await imageKit.files.upload({
@@ -95,7 +100,6 @@ export const updateResume = async (req, res) => {
       .json({ message: "Resume updated successfully", resume });
   } catch (error) {
     console.log(error);
-
     return res.status(400).json({ message: error.message });
   }
 };

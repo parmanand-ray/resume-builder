@@ -23,7 +23,7 @@ const resumeSchema = new mongoose.Schema(
       type: String,
       default: "#3B82F6",
     },
-    professnal_summary: {
+    professional_summary: {
       type: String,
       default: "",
     },

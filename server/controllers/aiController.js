@@ -5,8 +5,8 @@ import Resume from "../models/Resume.js";
 
 export const enhanceProfessionalSummary = async (req, res) => {
   try {
-    const { userContant } = req.body;
-    if (!userContant) {
+    const { userContent } = req.body;
+    if (!userContent) {
       return res.status(400).json({ message: "Please provide user content" });
     }
     const response = await ai.chat.completions.create({
@@ -15,17 +15,24 @@ export const enhanceProfessionalSummary = async (req, res) => {
         {
           role: "system",
           content:
-            "You are a helpful assistant that enhances the professional summary of a resume. You take the user's input and generate a concise and impactful professional summary that highlights their skills, experience, and achievements. make sure the description will be Ats friendly.",
+            "You are a resume optimization assistant. Your task is to enhance the user's job description into strong, ATS-friendly bullet points. You must follow these rules strictly. Return ONLY 2–3 bullet points. No explanations. No headings. No options. No extra text. Each bullet: - max 15 words - starts with an action verb - focuses on impact or achievement If you add anything else, the response is invalid.",
         },
         {
           role: "user",
-          content: userContant,
+          content: userContent,
         },
       ],
     });
     const enhancedContent = response.choices[0].message.content;
     res.status(200).json({ enhancedContent });
   } catch (error) {
+    if (error.status === 503) {
+      return res.status(503).json({
+        message:
+          "AI service is temporarily unavailable. Please try again in a few moments.",
+      });
+    }
+    console.log(error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
@@ -34,8 +41,8 @@ export const enhanceProfessionalSummary = async (req, res) => {
 
 export const enhanceJobDescription = async (req, res) => {
   try {
-    const { userContant } = req.body;
-    if (!userContant) {
+    const { userContent } = req.body;
+    if (!userContent) {
       return res.status(400).json({ message: "Please provide user content" });
     }
     const response = await ai.chat.completions.create({
@@ -48,7 +55,7 @@ export const enhanceJobDescription = async (req, res) => {
         },
         {
           role: "user",
-          content: userContant,
+          content: userContent,
         },
       ],
     });
@@ -74,49 +81,49 @@ export const uploadResume = async (req, res) => {
       "You are a helpful assistant that extracts the content of a resume file. You take the user's uploaded resume file and extract the relevant information such as their name, contact information, skills, experience, and education. You then return this information in a structured format that can be easily used to populate a resume template.";
 
     const userPrompt = `extract data from this resume: ${resumeText} Provide data in the following JSON format with no additional text before or after:
-{
- professnal_summary: {
-      type: String,
-      default: "",
-    },
-    skills: [{ type: String }],
-    personal_info: {
-      image: { type: String, default: "" },
-      full_name: { type: String, default: "" },
-      profession: { type: String, default: "" },
-      email: { type: String, default: "" },
-      phone: { type: String, default: "" },
-      linkedin: { type: String, default: "" },
-      location: { type: String, default: "" },
-      website: { type: String, default: "" },
-    },
-    exprience: [
-      {
-        company: { type: String },
-        position: { type: String },
-        start_date: { type: String },
-        end_date: { type: String },
-        description: { type: String },
-        is_current: { type: Boolean },
-      },
-    ],
-    projects: [
-      {
-        name: { type: String },
-        description: { type: String },
-        type: { type: String },
-      },
-    ],
-    education: [
-      {
-        institution: { type: String },
-        degree: { type: String },
-        field: { type: String },
-        graduation_date: { type: String },
-        gpa: { type: String },
-      },
-    ],
-}`;
+        {
+         professional_summary: {
+              type: String,
+              default: "",
+            },
+            skills: [{ type: String }],
+            personal_info: {
+              image: { type: String, default: "" },
+              full_name: { type: String, default: "" },
+              profession: { type: String, default: "" },
+              email: { type: String, default: "" },
+              phone: { type: String, default: "" },
+              linkedin: { type: String, default: "" },
+              location: { type: String, default: "" },
+              website: { type: String, default: "" },
+            },
+            exprience: [
+              {
+                company: { type: String },
+                position: { type: String },
+                start_date: { type: String },
+                end_date: { type: String },
+                description: { type: String },
+                is_current: { type: Boolean },
+              },
+            ],
+            projects: [
+              {
+                name: { type: String },
+                description: { type: String },
+                type: { type: String },
+              },
+            ],
+            education: [
+              {
+                institution: { type: String },
+                degree: { type: String },
+                field: { type: String },
+                graduation_date: { type: String },
+                gpa: { type: String },
+              },
+            ],
+        }`;
 
     const response = await ai.chat.completions.create({
       model: process.env.OPENAI_MODEL,
@@ -131,12 +138,18 @@ export const uploadResume = async (req, res) => {
         type: "json_object",
       },
     });
+
     const extractedData = response.choices[0].message.content;
     const parsedData = JSON.parse(extractedData);
     const newResume = await Resume.create({ userId, title, ...parsedData });
     res.json({ resumeId: newResume._id });
   } catch (error) {
-    console.log(error);
+    if (error.status === 503) {
+      return res.status(503).json({
+        message:
+          "AI service is temporarily unavailable. Please try again in a few moments.",
+      });
+    }
 
     res.status(500).json({ message: "Server error", error: error.message });
   }

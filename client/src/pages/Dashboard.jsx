@@ -10,7 +10,6 @@ import {
   UploadCloudIcon,
   XIcon,
 } from "lucide-react";
-import { dummyResumeData } from "../assets/assets";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { extractTextFromPDF } from "../utils/pdfParser";
@@ -64,20 +63,19 @@ const Dashboard = () => {
 
     try {
       const resumeText = await extractTextFromPDF(resume);
-      console.log(resumeText);
 
       const { data } = await api.post(
         "/api/ai/upload-resume",
         { title, resumeText },
         { headers: { Authorization: `Bearer ${token}` } },
       );
+      console.log(resumeText);
       setTitle("");
       setResume(null);
       setShowUploadResume(false);
       navigate(`/app/builder/${data.resumeId}`);
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message);
-      console.log(error);
     }
     setIsLoading(false);
   };
