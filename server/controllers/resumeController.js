@@ -69,10 +69,10 @@ export const updateResume = async (req, res) => {
     const userId = req.userId;
     const { resumeId, resumeData, removeBackground } = req.body;
     const image = req.file;
-    let resumeDataCopy ;
-    if(typeof resumeData === "string"){
+    let resumeDataCopy;
+    if (typeof resumeData === "string") {
       resumeDataCopy = JSON.parse(resumeData);
-    }else{
+    } else {
       resumeDataCopy = structuredClone(resumeData);
     }
     if (image) {

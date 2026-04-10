@@ -38,7 +38,7 @@ const resumeSchema = new mongoose.Schema(
       location: { type: String, default: "" },
       website: { type: String, default: "" },
     },
-    exprience: [
+    experience: [
       {
         company: { type: String },
         position: { type: String },

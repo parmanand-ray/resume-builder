@@ -1,7 +1,7 @@
 import { Plus, Sparkles, X } from "lucide-react";
 import React, { useState } from "react";
 
-const SkillsForms = ({ data, onChange }) => {
+const SkillsForms = ({ data = [], onChange }) => {
   const [newSkill, setNewSkill] = useState("");
   const addSkill = () => {
     if (newSkill.trim() !== "" && !data.includes(newSkill.trim())) {
@@ -37,11 +37,11 @@ const SkillsForms = ({ data, onChange }) => {
           className="flex-1 px-3 py-2 text-sm"
           onChange={(e) => setNewSkill(e.target.value)}
           value={newSkill}
-          onkeyDown={handleKeyPress}
+          onKeyDown={handleKeyPress}
         />
         <button
           onClick={addSkill}
-          disabled={!newSkill.trim}
+          disabled={!newSkill.trim()}
           className="flex items-center gap-2 px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Plus className="size-4" /> Add

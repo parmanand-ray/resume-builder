@@ -38,7 +38,7 @@ const ResemeBuilder = () => {
     professional_summary: "",
     experience: [],
     education: [],
-    project: [],
+    projects: [],
     skills: [],
     template: "classic",
     accent_color: "#338826",
@@ -111,7 +111,6 @@ const ResemeBuilder = () => {
   const saveResume = async () => {
     try {
       let updatedResumeData = structuredClone(resumeData);
-
       //remove image from updatedResumeData
       if (typeof resumeData.personal_info.image === "object") {
         delete updatedResumeData.personal_info.image;
@@ -268,11 +267,11 @@ const ResemeBuilder = () => {
 
                 {activeSection.id === "projects" && (
                   <ProjectForm
-                    data={resumeData.project}
+                    data={resumeData.projects}
                     onChange={(data) =>
                       setResumeData((prev) => ({
                         ...prev,
-                        project: data,
+                        projects: data,
                       }))
                     }
                   />

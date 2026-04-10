@@ -60,6 +60,7 @@ export const enhanceJobDescription = async (req, res) => {
       ],
     });
     const enhancedContent = response.choices[0].message.content;
+
     res.status(200).json({ enhancedContent });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
@@ -97,7 +98,7 @@ export const uploadResume = async (req, res) => {
               location: { type: String, default: "" },
               website: { type: String, default: "" },
             },
-            exprience: [
+            experience: [
               {
                 company: { type: String },
                 position: { type: String },
