@@ -218,11 +218,7 @@ const Hero = () => {
 
         {/* Hero Image Section */}
         <div className="w-full flex justify-center md:justify-end md:max-w-xs lg:max-w-lg">
-          <img
-            className="w-full h-auto drop-shadow-2xl"
-            src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/users-group.png"
-            alt="Hero Illustration"
-          />
+          <img className="" src="/resume.avif" alt="Hero Illustration" />
         </div>
       </div>
     </section>

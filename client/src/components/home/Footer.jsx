@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -9,6 +10,7 @@ const Footer = () => {
         background: "#0f2515",
         color: "#a7c9a0",
       }}
+      id="contacts"
     >
       {/* Google Fonts */}
       <link
@@ -117,7 +119,8 @@ const Footer = () => {
           <span style={{ fontSize: 13, color: "#7aaa68" }}>
             Start building for free — no credit card needed
           </span>
-          <button
+          <Link
+            to="/about-developer"
             style={{
               background: "#3B6D11",
               color: "#e0f0d0",
@@ -132,9 +135,10 @@ const Footer = () => {
             }}
             onMouseOver={(e) => (e.currentTarget.style.background = "#4d8c16")}
             onMouseOut={(e) => (e.currentTarget.style.background = "#3B6D11")}
+            target="_blank"
           >
-            Build My Resume →
-          </button>
+            About Developer →
+          </Link>
         </div>
       </div>
 
@@ -316,7 +320,20 @@ const Footer = () => {
         style={{ borderTop: "0.5px solid rgba(99,153,34,0.2)" }}
       >
         <span style={{ fontSize: 12, color: "#4d7a42" }}>
-          © {new Date().getFullYear()} ProResume AI. All rights reserved.
+          © {new Date().getFullYear()} ProResume AI. All rights reserved. Built
+          with ❤️ by{" "}
+          <Link
+            to="/about-developer"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: "#4d7a42",
+              fontWeight: "500",
+              textDecoration: "underline",
+            }}
+          >
+            Parmanand Ray
+          </Link>
         </span>
         <div className="flex gap-2">
           {[

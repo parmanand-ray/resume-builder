@@ -34,9 +34,9 @@ const Dashboard = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setAllResumes(data.resumes);
-    } catch {
+    } catch (error) {
       toast.error(error?.response?.data?.message || error.message);
-      console.log(error);
+      console.log(error.message);
     }
   };
   const createResume = async (event) => {
@@ -53,7 +53,7 @@ const Dashboard = () => {
       navigate(`/app/builder/${data.resume._id}`);
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message);
-      console.log(error);
+      console.log(error.message);
     }
   };
 
@@ -69,7 +69,6 @@ const Dashboard = () => {
         { title, resumeText },
         { headers: { Authorization: `Bearer ${token}` } },
       );
-      console.log(resumeText);
       setTitle("");
       setResume(null);
       setShowUploadResume(false);
@@ -100,7 +99,7 @@ const Dashboard = () => {
       toast.success(data.message);
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message);
-      console.log(error);
+      console.log(error.message);
     }
   };
 

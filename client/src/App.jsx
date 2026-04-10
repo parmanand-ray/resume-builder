@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Layout from "./pages/Layout";
 import Dashboard from "./pages/Dashboard";
 import ResumeBuilder from "./pages/ResemeBuilder";
+import ParmanandPortfolio from "./pages/ParmanandPortfolio";
 import Preview from "./pages/Preview";
 import { useDispatch } from "react-redux";
 import api from "./configs/api";
@@ -39,6 +40,7 @@ const App = () => {
       <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="about-developer" element={<ParmanandPortfolio />} />
         <Route path="app" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="builder/:resumeId" element={<ResumeBuilder />} />

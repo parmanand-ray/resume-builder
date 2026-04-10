@@ -15,7 +15,7 @@ export const enhanceProfessionalSummary = async (req, res) => {
         {
           role: "system",
           content:
-            "You are a resume optimization assistant. Your task is to enhance the user's job description into strong, ATS-friendly bullet points. You must follow these rules strictly. Return ONLY 2–3 bullet points. No explanations. No headings. No options. No extra text. Each bullet: - max 15 words - starts with an action verb - focuses on impact or achievement If you add anything else, the response is invalid.",
+            "You are an expert in resume writing. Your task is to enhance the professional summary of a resume. The summary should be 1-2 sentences also highlighting key skills, experience, and career objectives. Make it compelling and ATS-friendly. and only return text no options or anything else.",
         },
         {
           role: "user",
@@ -51,7 +51,7 @@ export const enhanceJobDescription = async (req, res) => {
         {
           role: "system",
           content:
-            "You are a helpful assistant that enhances the job description of a resume. You take the user's input and generate a concise and impactful job description that highlights their skills, experience, and achievements in a way that is relevant to the job they are applying for. make sure the description will be Ats friendly.",
+            "You are an expert in resume writing. Your task is to enhance the job description of a resume. The job description should be only in 1-2 sentence also highlighting key responsibilities and achievements. Use action verbs and quantifiable results where possible. Make it ATS-friendly. and only return text no options or anything else.",
         },
         {
           role: "user",
@@ -79,7 +79,7 @@ export const uploadResume = async (req, res) => {
     }
 
     const systemPrompt =
-      "You are a helpful assistant that extracts the content of a resume file. You take the user's uploaded resume file and extract the relevant information such as their name, contact information, skills, experience, and education. You then return this information in a structured format that can be easily used to populate a resume template.";
+      "You are an expert AI Agent to extract data from resume.";
 
     const userPrompt = `extract data from this resume: ${resumeText} Provide data in the following JSON format with no additional text before or after:
         {

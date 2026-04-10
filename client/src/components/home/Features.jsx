@@ -17,14 +17,10 @@ const Features = () => {
         title="Create a Resume That Actually Gets You Hired"
         description="Stand out from thousands of applicants with ATS-optimized resumes, smart suggestions, and clean formatting to impress recruiters without wasting hours."
       />
-      <div className="flex flex-col md:flex-row items-center justify-center xl:-mt-10">
-        <img
-          className="max-w-2xl w-full xl:-ml-32"
-          src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/features/group-image-1.png"
-          alt=""
-        />
+      <div className="flex flex-col md:flex-row items-center justify-center xl:-mt-10 gap-12 md:gap-20 mt-5">
+        <img className="max-w-xl w-full " src="/professional.avif" alt="" />
         <div
-          className="px-4 md:px-0"
+          className="px-4 md:px-0 mt-16"
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
         >
