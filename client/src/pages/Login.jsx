@@ -52,7 +52,6 @@ const Login = () => {
       <Banner />
 
       <div className="min-h-screen flex flex-col lg:flex-row bg-gradient-to-br from-green-50 via-white to-green-100">
-
         {/* LEFT SECTION */}
         <div className="hidden lg:flex w-1/2 items-center justify-center p-12">
           <div className="max-w-lg space-y-6">
@@ -62,7 +61,8 @@ const Login = () => {
             </h1>
 
             <p className="text-gray-600 text-lg">
-              Create ATS-friendly resumes in minutes with modern templates and smart suggestions.
+              Create ATS-friendly resumes in minutes with modern templates and
+              smart suggestions.
             </p>
 
             <div className="space-y-3 text-gray-700">
@@ -75,9 +75,7 @@ const Login = () => {
 
         {/* RIGHT FORM SECTION */}
         <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-8">
-
           <div className="w-full max-w-md bg-white/70 backdrop-blur-xl border border-gray-200 shadow-xl rounded-3xl p-6 sm:p-10">
-
             {/* TITLE */}
             <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-900">
               {state === "login" ? "Welcome Back" : "Create Account"}
@@ -91,16 +89,15 @@ const Login = () => {
 
             {/* FORM */}
             <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-
               {/* NAME */}
               {state !== "login" && (
-                <div className="flex items-center gap-3 px-4 h-12 rounded-xl border bg-white focus-within:ring-2 focus-within:ring-green-400 transition">
+                <div className="flex items-center gap-3 px-4 h-12 rounded-xl border border-gray-300 bg-white focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition">
                   <User2Icon size={18} className="text-green-600" />
                   <input
                     type="text"
                     name="name"
                     placeholder="Full Name"
-                    className="w-full outline-none bg-transparent text-sm"
+                    className="w-full h-full bg-transparent outline-none border-0 ring-0 focus:ring-0 focus:outline-none"
                     value={formData.name}
                     onChange={handleChange}
                     disabled={loading}
@@ -110,13 +107,13 @@ const Login = () => {
               )}
 
               {/* EMAIL */}
-              <div className="flex items-center gap-3 px-4 h-12 rounded-xl border bg-white focus-within:ring-2 focus-within:ring-green-400 transition">
+              <div className="flex items-center gap-3 px-4 h-12 rounded-xl border border-gray-300 bg-white focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition">
                 <Mail size={18} className="text-green-600" />
                 <input
                   type="email"
                   name="email"
                   placeholder="Email Address"
-                  className="w-full outline-none bg-transparent text-sm"
+                  className="w-full h-full bg-transparent outline-none border-0 ring-0 focus:ring-0 focus:outline-none"
                   value={formData.email}
                   onChange={handleChange}
                   disabled={loading}
@@ -125,13 +122,13 @@ const Login = () => {
               </div>
 
               {/* PASSWORD */}
-              <div className="flex items-center gap-3 px-4 h-12 rounded-xl border bg-white focus-within:ring-2 focus-within:ring-green-400 transition">
+              <div className="flex items-center gap-3 px-4 h-12 rounded-xl border border-gray-300 bg-white focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-100 transition">
                 <Lock size={18} className="text-green-600" />
                 <input
                   type="password"
                   name="password"
                   placeholder="Password"
-                  className="w-full outline-none bg-transparent text-sm"
+                  className="w-full h-full bg-transparent outline-none border-0 ring-0 focus:ring-0 focus:outline-none"
                   value={formData.password}
                   onChange={handleChange}
                   disabled={loading}
@@ -168,7 +165,9 @@ const Login = () => {
                         d="M4 12a8 8 0 018-8v8H4z"
                       />
                     </svg>
-                    {state === "login" ? "Logging in..." : "Creating account..."}
+                    {state === "login"
+                      ? "Logging in..."
+                      : "Creating account..."}
                   </>
                 ) : state === "login" ? (
                   "Login"
