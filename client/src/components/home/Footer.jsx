@@ -119,26 +119,33 @@ const Footer = () => {
           <span style={{ fontSize: 13, color: "#7aaa68" }}>
             Start building for free — no credit card needed
           </span>
-          <Link
-            to="/about-developer"
-            style={{
-              background: "#3B6D11",
-              color: "#e0f0d0",
-              border: "none",
-              padding: "10px 22px",
-              borderRadius: 100,
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: 13,
-              fontWeight: 500,
-              cursor: "pointer",
-              whiteSpace: "nowrap",
-            }}
-            onMouseOver={(e) => (e.currentTarget.style.background = "#4d8c16")}
-            onMouseOut={(e) => (e.currentTarget.style.background = "#3B6D11")}
-            target="_blank"
-          >
-            About Developer →
-          </Link>
+         <a
+  href="https://parmanand-ray.vercel.app/"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    background: "#3B6D11",
+    color: "#e0f0d0",
+    border: "none",
+    padding: "10px 22px",
+    borderRadius: 100,
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: 13,
+    fontWeight: 500,
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+    transition: "0.2s ease",
+    display: "inline-block",
+  }}
+  onMouseOver={(e) =>
+    (e.currentTarget.style.background = "#4d8c16")
+  }
+  onMouseOut={(e) =>
+    (e.currentTarget.style.background = "#3B6D11")
+  }
+>
+  About Developer →
+</a>
         </div>
       </div>
 
