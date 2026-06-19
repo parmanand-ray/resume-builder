@@ -1,19 +1,26 @@
 import { ArrowRight } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
 const Hero = () => {
   const { user } = useSelector((state) => state.auth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  // 🔥 Prevent background scroll when menu open
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
+  }, [isMenuOpen]);
 
   return (
-    <section className="pb-32 md:pb-44 bg-[url('https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/bg-with-grid.png')] bg-cover bg-center bg-no-repeat text-green-800 text-sm font-['Poppins']">
-      {/* Navbar Section */}
-      <nav className="flex items-center justify-between p-4 md:px-16 lg:px-24 xl:px-32 border-b border-white/25 w-full">
+    <section className="pb-20 md:pb-44 bg-[url('https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/bg-with-grid.png')] bg-cover bg-center text-green-800 text-sm font-['Poppins']">
+
+      {/* NAVBAR */}
+      <nav className="flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-white/25 relative">
+
+        {/* Logo */}
         <div className="flex items-center gap-3">
           <div
             className="flex items-center justify-center rounded-xl"
@@ -23,203 +30,138 @@ const Hero = () => {
               background: "linear-gradient(135deg, #3B6D11, #639922)",
             }}
           >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="white"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <polyline
-                points="14 2 14 8 20 8"
-                style={{
-                  fill: "none",
-                  stroke: "rgba(255,255,255,0.5)",
-                  strokeWidth: 1.5,
-                }}
-              />
-              <line
-                x1="16"
-                y1="13"
-                x2="8"
-                y2="13"
-                style={{
-                  fill: "none",
-                  stroke: "rgba(255,255,255,0.7)",
-                  strokeWidth: 1.5,
-                }}
-              />
-              <line
-                x1="16"
-                y1="17"
-                x2="8"
-                y2="17"
-                style={{
-                  fill: "none",
-                  stroke: "rgba(255,255,255,0.7)",
-                  strokeWidth: 1.5,
-                }}
-              />
-            </svg>
+            <span className="text-white font-bold">PR</span>
           </div>
+
           <div>
-            <div
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: 20,
-                fontWeight: 600,
-                color: "#639900",
-                letterSpacing: "-0.3px",
-              }}
-            >
+            <div className="text-lg font-semibold text-green-700">
               ProResume AI
             </div>
-            <div
-              style={{
-                fontSize: 11,
-                fontWeight: 500,
-                color: "#639922",
-                letterSpacing: "1.5px",
-                textTransform: "uppercase",
-                marginTop: -2,
-              }}
-            >
+            <div className="text-[10px] tracking-widest uppercase text-green-600">
               Resume Builder
             </div>
           </div>
         </div>
 
-        <ul
-          className={`max-md:absolute max-md:h-full max-md:z-50 max-md:w-full max-md:top-0 transition-all duration-300 max-md:backdrop-blur max-md:bg-white/70 max-md:text-base flex flex-col md:flex-row items-center justify-center gap-8 font-medium ${isMenuOpen ? "left-0" : "-left-full"}`}
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex items-center gap-8 font-medium">
+          <li><a href="#">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contacts">Contacts</a></li>
+        </ul>
+
+        {/* Right Buttons */}
+        <div className="flex items-center gap-3">
+
+          {!user && (
+            <>
+              <Link
+                to="/app?state=register"
+                className="hidden md:block px-6 py-2 text-white bg-green-600 rounded-full"
+              >
+                Get Started
+              </Link>
+
+              <Link
+                to="/app?state=login"
+                className="px-4 py-2 rounded-full bg-white border text-green-700"
+              >
+                Login
+              </Link>
+            </>
+          )}
+
+          {user && (
+            <Link
+              to="/app"
+              className="hidden md:flex px-6 py-2 bg-green-600 text-white rounded-full"
+            >
+              Dashboard <ArrowRight size={16} className="ml-1" />
+            </Link>
+          )}
+
+          {/* Mobile Menu Button */}
+          <button onClick={toggleMenu} className="md:hidden">
+            <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="black" strokeWidth="2" />
+            </svg>
+          </button>
+        </div>
+
+        {/* MOBILE MENU */}
+        <div
+          className={`fixed top-0 left-0 h-full w-full bg-white/90 backdrop-blur-md flex flex-col items-center justify-center gap-8 text-lg font-medium transition-all duration-300 md:hidden ${
+            isMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
         >
-          <li className="hover:text-green-500">
-            <a href="#">Home</a>
-          </li>
-          <li className="hover:text-green-500">
-            <a href="#features">features</a>
-          </li>
-          <li className="hover:text-green-500">
-            <a href="#testimonials">Testimonials</a>
-          </li>
-          <li className="hover:text-green-500">
-            <a href="#contacts">Contacts</a>
-          </li>
+
           <button
             onClick={toggleMenu}
-            className="md:hidden bg-green-800 text-white p-2 rounded-md"
+            className="absolute top-5 right-5 px-4 py-2 bg-green-700 text-white rounded-md"
           >
             Close
           </button>
-        </ul>
 
-        <button onClick={toggleMenu} className="md:hidden">
-          <svg
-            className="size-7"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
+          <a onClick={toggleMenu} href="#">Home</a>
+          <a onClick={toggleMenu} href="#features">Features</a>
+          <a onClick={toggleMenu} href="#testimonials">Testimonials</a>
+          <a onClick={toggleMenu} href="#contacts">Contacts</a>
+
+          <Link
+            to="/app"
+            className="px-6 py-3 bg-green-600 text-white rounded-full"
+            onClick={toggleMenu}
           >
-            <path d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-        <div className="flex gap-2">
-          <div className="flex gap-2">
-            {!user && (
-              <>
-                <Link
-                  to="/app?state=register"
-                  className="max-md:hidden px-6 py-3 text-white bg-green-600 hover:bg-green-700 transition rounded-full"
-                >
-                  Get Started
-                </Link>
-
-                <Link
-                  to="/app?state=login"
-                  className="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium rounded-full bg-gradient-to-br from-green-300 to-green-300"
-                >
-                  <span className="relative px-4 py-2.5 bg-white rounded-full">
-                    Login
-                  </span>
-                </Link>
-              </>
-            )}
-
-            {user && (
-              <Link
-                to="/app"
-                className="hidden md:block px-8 py-2 bg-green-500 hover:bg-green-700 active:scale-95 transition-all rounded-full text-white"
-              >
-                Dashboard <ArrowRight size={16} className="inline-block ml-1" />
-              </Link>
-            )}
-          </div>
+            Open App
+          </Link>
         </div>
       </nav>
 
-      {/* Hero Content */}
-      <div className="flex flex-col-reverse gap-10 md:flex-row px-4 md:px-16 lg:px-24 xl:px-32 mt-12 md:mt-32">
-        <div className="max-md:text-center">
-          <h1 className="text-4xl md:text-6xl/[76px] font-semibold max-w-xl bg-gradient-to-r from-green-900 to-[#6fe46d] text-transparent bg-clip-text">
+      {/* HERO CONTENT */}
+      <div className="flex flex-col-reverse md:flex-row items-center gap-10 px-4 md:px-16 lg:px-24 xl:px-32 mt-10 md:mt-24">
+
+        {/* LEFT TEXT */}
+        <div className="text-center md:text-left max-w-xl">
+
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-semibold leading-tight bg-gradient-to-r from-green-900 to-green-500 text-transparent bg-clip-text">
             Create Job-Winning Resumes in Minutes
           </h1>
 
-          <p className="text-sm md:text-base max-w-lg mt-6 text-green-600">
-            Build ATS-friendly resumes with real-time preview, smart
-            suggestions, and instant PDF download. No design skills needed.
+          <p className="mt-5 text-green-600 text-sm md:text-base">
+            Build ATS-friendly resumes with real-time preview, smart suggestions, and instant PDF download.
           </p>
 
-          {/* ⭐ "USED BY" SECTION MOVED HERE (Above Button) */}
-          <div className="flex items-center mt-8 mb-6 justify-center md:justify-start">
-            <div className="flex -space-x-3.5 pr-3">
-              {[1, 2, 3, 4, 5].map((num) => (
-                <img
-                  key={num}
-                  src={`https://i.pravatar.cc/150?img=${num + 10}`}
-                  alt="user"
-                  className="size-10 border-2 border-white rounded-full hover:-translate-y-px transition"
-                />
-              ))}
-            </div>
-            <div>
-              <div className="flex items-center gap-px">
-                {[...Array(5)].map((_, i) => (
-                  <svg
-                    key={i}
-                    width="13"
-                    height="12"
-                    viewBox="0 0 13 12"
-                    fill="none"
-                  >
-                    <path
-                      d="M5.85536 0.463527C6.00504 0.00287118 6.65674 0.00287028 6.80642 0.463526L7.82681 3.60397C7.89375 3.80998 8.08572 3.94946 8.30234 3.94946H11.6044C12.0888 3.94946 12.2901 4.56926 11.8983 4.85397L9.22687 6.79486C9.05162 6.92219 8.97829 7.14787 9.04523 7.35388L10.0656 10.4943C10.2153 10.955 9.68806 11.338 9.2962 11.0533L6.62478 9.11244C6.44954 8.98512 6.21224 8.98512 6.037 9.11244L3.36558 11.0533C2.97372 11.338 2.44648 10.955 2.59616 10.4943L3.61655 7.35388C3.68349 7.14787 3.61016 6.92219 3.43491 6.79486L0.763497 4.85397C0.37164 4.56927 0.573027 3.94946 1.05739 3.94946H4.35944C4.57606 3.94946 4.76803 3.80998 4.83497 3.60397L5.85536 0.463527Z"
-                      fill="#FF8F20"
-                    />
-                  </svg>
-                ))}
-              </div>
-              <p className="text-xs text-green-500 font-medium">
-                Trusted by 1,000+ professionals
-              </p>
-            </div>
-          </div>
+          {/* CTA */}
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
 
-          {/* Main CTA Button */}
-          <div className="flex items-center gap-4 justify-center md:justify-start">
             <Link
               to="/app"
-              className="px-8 py-4 rounded-full bg-green-600 text-white font-medium hover:bg-green-700 shadow-lg shadow-green-200 transition-all active:scale-95"
+              className="px-6 py-3 bg-green-600 text-white rounded-full text-center"
             >
-              Create Resume Now — It's Free
+              Create Resume — Free
             </Link>
+
+            <a
+              href="#features"
+              className="px-6 py-3 border border-green-600 text-green-700 rounded-full text-center"
+            >
+              Learn More
+            </a>
+
           </div>
+
         </div>
 
-        {/* Hero Image Section */}
-        <div className="w-full flex justify-center md:justify-end md:max-w-xs lg:max-w-lg">
-          <img className="" src="/resume.avif" alt="Hero Illustration" />
+        {/* IMAGE */}
+        <div className="w-full flex justify-center md:justify-end">
+          <img
+            src="/resume.avif"
+            className="w-[250px] sm:w-[320px] md:w-[420px]"
+            alt="resume"
+          />
         </div>
+
       </div>
     </section>
   );
